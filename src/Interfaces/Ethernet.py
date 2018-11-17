@@ -26,7 +26,7 @@ class Scp( InterfaceBase ):
             self.__address__,
             self.__model_root__,
             '16384'
-        ])
+        ]).decode('utf8')
 
         self.__profile__ = json.loads(profile_str)
 
@@ -35,7 +35,7 @@ class Scp( InterfaceBase ):
             self.__script_dir__ + '/scp_list.sh',
             self.__address__,
             self.__model_root__
-        ])
+        ]).decode('utf8')
 
         return model_name in json.loads(filelist_str).keys()
 
@@ -46,7 +46,7 @@ class Scp( InterfaceBase ):
             self.__model_root__,
             model_name,
             self.__model_root__
-        ])
+        ]).decode('utf8')
 
         return json.loads(report_str)
 
@@ -72,7 +72,7 @@ class Ftp( InterfaceBase ):
             self.__address__,
             self.__model_root__,
             '16384'
-        ])
+        ]).decode('utf8')
 
         self.__profile__ = json.loads(profile_str)
 
@@ -81,7 +81,7 @@ class Ftp( InterfaceBase ):
             self.__script_dir__ + '/ftp_list.sh',
             self.__address__,
             self.__model_root__
-        ])
+        ]).decode('utf8')
 
         return model_name in json.loads(filelist_str).keys()
 
@@ -92,7 +92,7 @@ class Ftp( InterfaceBase ):
             self.__model_root__,
             model_name,
             self.__model_root__
-        ])
+        ]).decode('utf8')
 
         return json.loads(report_str)
 
