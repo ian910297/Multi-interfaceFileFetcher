@@ -9,7 +9,7 @@ import abc
 
 class InterfaceBase( abc.ABC ):
     @abc.abstractmethod
-    def __init__( self, name, address, model_root ):
+    def __init__( self, name, address, model_root, script_dir ):
         return NoImplemented
 
     @abc.abstractmethod

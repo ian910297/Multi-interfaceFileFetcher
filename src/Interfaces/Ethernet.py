@@ -8,10 +8,11 @@ This is an easy implementation for transfer model file based on ethernet.
 from InterfaceBase import InterfaceBase
 
 class Scp( InterfaceBase ):
-    def __init__( self, name, address, model_root ):
+    def __init__( self, name, address, model_root, script_dir ):
         self.__name__       = name
         self.__address__    = address
         self.__model_root__ = model_root
+        self.__script_dir__ = script_dir
 
     def HasFile( self, model_name ):
         pass
@@ -23,10 +24,11 @@ class Scp( InterfaceBase ):
         pass
 
 class Ftp( InterfaceBase ):
-    def __init__( self, name, address, model_root ):
+    def __init__( self, name, address, model_root, script_dir ):
         self.__name__       = name
         self.__address__    = address
         self.__model_root__ = model_root
+        self.__script_dir__ = script_dir
 
     def HasFile( self, model_name ):
         pass
