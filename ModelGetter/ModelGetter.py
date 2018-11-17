@@ -5,10 +5,10 @@ An simple file getter entry for chainer model.
 @date  : 16/11/2018
 """
 
-from Interfaces.Ethernet import Scp, Ftp
-from Interfaces.Bluetooth import Obexftp
+from .Interfaces.Ethernet import Scp, Ftp
+from .Interfaces.Bluetooth import Obexftp
 
-from Policies.EzPolicy import DummyPolicy
+from .Policies.EzPolicy import DummyPolicy
 
 interface_selector = { "Scp": Scp, "Ftp": Ftp, "Bluetooth": Obexftp }
 policy_selector = {"Dummy": DummyPolicy}
