@@ -5,7 +5,7 @@ This is an easy implementation for transfer model file based on ethernet.
 @date  : 16/11/2018
 """
 
-from InterfaceBase import InterfaceBase
+from .InterfaceBase import InterfaceBase
 
 import subprocess
 import json
@@ -29,6 +29,9 @@ class Scp( InterfaceBase ):
         ]).decode('utf8')
 
         self.__profile__ = json.loads(profile_str)
+
+    def GetName( self ):
+        return self.__name__
 
     def HasFile( self, model_name ):
         filelist_str = subprocess.check_output([
@@ -75,6 +78,9 @@ class Ftp( InterfaceBase ):
         ]).decode('utf8')
 
         self.__profile__ = json.loads(profile_str)
+
+    def GetName( self ):
+        return self.__name__
 
     def HasFile( self, model_name ):
         filelist_str = subprocess.check_output([

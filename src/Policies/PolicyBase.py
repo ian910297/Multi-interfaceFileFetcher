@@ -13,10 +13,10 @@ class PolicyBase( abc.ABC ):
         return NoImplemented
 
     @abc.abstractmethod
-    def SelectCommunicator( self, communicators ):
+    def Select( self, communicators ):
         return NoImplemented
 
     @abc.abstractmethod
-    def UpdatePolicy( self, transfer_record ):
+    def Update( self, transfer_record ):
         return NoImplemented
 

@@ -13,6 +13,10 @@ class InterfaceBase( abc.ABC ):
         return NoImplemented
 
     @abc.abstractmethod
+    def GetName( self ):
+        return NoImplemented
+
+    @abc.abstractmethod
     def HasFile( self, model_name ):
         return NoImplemented
 
