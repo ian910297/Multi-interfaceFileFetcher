@@ -17,7 +17,7 @@ do
     in_loop_cnt=0
     while true;
     do
-        scp_time=$( (time scp pi@pi7:~/$DOWNLOAD_DIR/$testfile ./) 2>&1 | grep real | awk -F'm' '{ print $2 }' | awk -F's' '{print $1}' )
+        scp_time=$( (time scp pi@$ADDR:~/$DOWNLOAD_DIR/$testfile ./) 2>&1 | grep real | awk -F'm' '{ print $2 }' | awk -F's' '{print $1}' )
         echo -en "[ $cnt, $scp_time ]"
 
         (( in_loop_cnt += 1 ))

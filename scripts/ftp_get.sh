@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 ADDR=$1
-FILENAME=$2
-DEST=$3
+TARGET_DIR=$2
+FILENAME=$3
+DEST=$4
 
 cd $DEST
-wget ftp://anonymous:@pi7/$FILENAME
+download_time=$( (time wget -q ftp://anonymous:@$ADDR/$TARGET_DIR/$FILENAME) 2>&1 | grep real | awk -F'm' '{ print $2 }' | awk -F's' '{print $1}' );
+filesize=$( ls -l  $FILENAME | awk '{ print $5 }' )
+echo "{ \"$FILENAME\": [$filesize, $download_time] }"
