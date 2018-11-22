@@ -9,9 +9,10 @@ from .Interfaces.Ethernet import Scp, Ftp
 from .Interfaces.Bluetooth import Obexftp
 
 from .Policies.EzPolicy import DummyPolicy
+from .Policies.BasicRL import VeryFirstPolicy as VFRL
 
 interface_selector = { "Scp": Scp, "Ftp": Ftp, "Bluetooth": Obexftp }
-policy_selector = {"Dummy": DummyPolicy}
+policy_selector = {"Dummy": DummyPolicy, "VFRL": VFRL}
 
 class ModelGetter:
     def __init__( self, interface_descriptors, policy_descriptor ):
@@ -27,12 +28,18 @@ class ModelGetter:
         self.__policy_agent__ = policy_selector[ policy_descriptor ](self.__communicators__)
 
     def GetModel( self, model_name ):
-        # do has files
-        ava_comms = [ comm for comm in self.__communicators__
-                if comm.HasFile(model_name) ]
+        # check file existence
+        ava_comms = []
+        filesize = 0
+        for comm in self.__communicators__:
+            fs = comm.GetFileInfo(model_name)
+
+            if fs is not None:
+                ava_comms.append(comm.GetName())
+                filesize =fs
 
         # policy select communicator
-        target_comm = self.__policy_agent__.Select(ava_comms)
+        target_comm = self.__policy_agent__.Select(ava_comms, filesize)
 
         # do get file
         report = target_comm.GetFile(model_name)

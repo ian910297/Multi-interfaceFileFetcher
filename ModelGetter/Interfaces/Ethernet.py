@@ -33,14 +33,19 @@ class Scp( InterfaceBase ):
     def GetName( self ):
         return self.__name__
 
-    def HasFile( self, model_name ):
+    def GetFileInfo( self, model_name ):
         filelist_str = subprocess.check_output([
             self.__script_dir__ + '/scp_list.sh',
             self.__address__,
             self.__model_root__
         ]).decode('utf8')
 
-        return model_name in json.loads(filelist_str).keys()
+        list_result = json.loads(filelist_str)
+
+        if model_name not in list_result.keys():
+            return None
+
+        return list_result[model_name]
 
     def GetFile( self, model_name ):
         report_str = subprocess.check_output([
@@ -82,14 +87,19 @@ class Ftp( InterfaceBase ):
     def GetName( self ):
         return self.__name__
 
-    def HasFile( self, model_name ):
+    def GetFileInfo( self, model_name ):
         filelist_str = subprocess.check_output([
             self.__script_dir__ + '/ftp_list.sh',
             self.__address__,
             self.__model_root__
         ]).decode('utf8')
 
-        return model_name in json.loads(filelist_str).keys()
+        list_result = json.loads(filelist_str)
+
+        if model_name not in list_result.keys():
+            return None
+
+        return list_result[model_name]
 
     def GetFile( self, model_name ):
         report_str = subprocess.check_output([

@@ -15,10 +15,8 @@ class DummyPolicy( PolicyBase ):
             comm.GetName(): comm for comm in communicators
         }
 
-    def Select( self, communicators ):
-        cand = [ comm.GetName() for comm in communicators ]
-
-        return self.__communicator__[ random.choice(cand) ]
+    def Select( self, communicator_names, filesize ):
+        return self.__communicator__[ random.choice(communicator_names) ]
 
     def Update( self, transfer_record ):
         pass

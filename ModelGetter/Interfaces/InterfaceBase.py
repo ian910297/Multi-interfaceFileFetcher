@@ -17,7 +17,7 @@ class InterfaceBase( abc.ABC ):
         return NoImplemented
 
     @abc.abstractmethod
-    def HasFile( self, model_name ):
+    def GetFileInfo( self, model_name ):
         return NoImplemented
 
     @abc.abstractmethod

@@ -13,7 +13,7 @@ class PolicyBase( abc.ABC ):
         return NoImplemented
 
     @abc.abstractmethod
-    def Select( self, communicators ):
+    def Select( self, communicator_names, filesize ):
         return NoImplemented
 
     @abc.abstractmethod
