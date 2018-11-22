@@ -10,6 +10,8 @@ from pprint import pprint
 from .PolicyBase import PolicyBase
 
 import random
+import itertools
+import bisect
 
 class VeryFirstPolicy( PolicyBase ):
     def __init__( self, communicators ):
@@ -44,6 +46,14 @@ class VeryFirstPolicy( PolicyBase ):
 
         return now_state
 
+    def __WeightChoice__( self, weighted_dict ):
+        comm_names = list(weighted_dict.keys())
+        comm_ws = [1 / weighted_dict[n] for n in weighted_dict.keys()]
+
+        cumdlist = list(itertools.accumulate(comm_ws))
+        x = random.random() * cumdlist[-1]
+
+        return comm_names[bisect.bisect(cumdlist, x)]
 
     def Select( self, communicator_names, filesize ):
         # Get correct start state
@@ -53,7 +63,9 @@ class VeryFirstPolicy( PolicyBase ):
         comm_ws = self.__action_map__[ now_state ]
 
         # Select action
-        comm_name = random.choices(list(comm_ws.keys()), weights=[1 / comm_ws[n] for n in comm_ws.keys()])[0]
+        comm_name = self.__WeightChoice__(comm_ws)
+
+        print("use: " + comm_name)
 
         return self.__communicators__[ comm_name ]
 
