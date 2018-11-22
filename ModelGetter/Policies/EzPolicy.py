@@ -18,5 +18,5 @@ class DummyPolicy( PolicyBase ):
     def Select( self, communicator_names, filesize ):
         return self.__communicator__[ random.choice(communicator_names) ]
 
-    def Update( self, transfer_record ):
+    def Update( self, communicator_name, transfer_record ):
         pass

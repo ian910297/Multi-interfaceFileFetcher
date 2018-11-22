@@ -20,7 +20,7 @@ do
     while true;
     do
         bt_time=$( (time obexftp -b $ADDR -B $CHANNEL --chdir $DOWNLOAD_DIR --get $testfile) 2>&1 | grep real | awk -F'm' '{ print $2 }' | awk -F's' '{print $1}' );
-        echo -en "    $scp_time"
+        echo -en "    $bt_time"
 
         (( in_loop_cnt += 1 ))
 

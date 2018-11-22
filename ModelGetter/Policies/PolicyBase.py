@@ -17,6 +17,6 @@ class PolicyBase( abc.ABC ):
         return NoImplemented
 
     @abc.abstractmethod
-    def Update( self, transfer_record ):
+    def Update( self, communicator_name, transfer_record ):
         return NoImplemented
 

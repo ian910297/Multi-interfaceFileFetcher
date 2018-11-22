@@ -45,4 +45,6 @@ class ModelGetter:
         report = target_comm.GetFile(model_name)
 
         # update policy
-        self.__policy_agent__.Update(report)
+        self.__policy_agent__.Update(target_comm.GetName(), report)
+
+        return report[model_name][1]

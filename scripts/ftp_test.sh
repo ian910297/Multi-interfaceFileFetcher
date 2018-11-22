@@ -20,7 +20,7 @@ do
     do
         rm -f $testfile
         ftp_time=$( (time wget ftp://anonymous:@$ADDR/$DOWNLOAD_DIR/$testfile ./) 2>&1 | grep real | awk -F'm' '{ print $2 }' | awk -F's' '{print $1}' )
-        echo -en "    $scp_time"
+        echo -en "    $ftp_time"
 
         (( in_loop_cnt += 1 ))
 
