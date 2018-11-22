@@ -33,7 +33,7 @@ def extract_config( config_obj ):
             continue
 
         if_desc.append('Scp,' + n + '_scp,'+ if_info['wifi'] + ',' + if_info['model_root'] +',../scripts')
-        #if_desc.append('Ftp,' + n + '_ftp,'+ if_info['wifi'] + ',' + if_info['model_root'] +',../scripts')
+        if_desc.append('Ftp,' + n + '_ftp,'+ if_info['wifi'] + ',' + if_info['model_root'] +',../scripts')
 
         if 'bluetooth' in if_info.keys():
             if_desc.append('Bluetooth,' + n + '_bt,'+ if_info['wifi'] + ',' +
