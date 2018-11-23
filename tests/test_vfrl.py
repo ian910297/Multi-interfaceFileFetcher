@@ -50,7 +50,7 @@ def main():
 
     cnt = 0
     while True:
-        target_model = random.choice([ "mdl1", "mdl2" ])
+        target_model = random.choice([ "mdl1", "mdl2", "mdl4", "mdl8", "mdl16", "mdl32", "mdl64", "mdl128", "mdl1024"])
 
         time_cost = mg.GetModel(target_model)
         cnt += 1
