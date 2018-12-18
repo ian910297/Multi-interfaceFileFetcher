@@ -31,8 +31,11 @@ class VeryFirstPolicy( PolicyBase ):
 
         for filesize in self.__action_map__.keys():
             for comm_name in self.__communicators__.keys():
-                self.__action_map__[ filesize ][ comm_name ] = \
+                self.__action_map__[ filesize ][ comm_name ] = {}
+                self.__action_map__[ filesize ][ comm_name ]['value'] = \
                     sum(self.__profiles__[ comm_name ][ str(filesize) ]) / len(self.__profiles__[ comm_name ][ str(filesize) ])
+                self.__action_map__[ filesize ][ comm_name ]['times'] = \
+                    len(self.__profiles__[ comm_name ][ str(filesize) ])
 
         pprint(self.__state_map__)
         pprint(self.__action_map__)
@@ -48,7 +51,7 @@ class VeryFirstPolicy( PolicyBase ):
 
     def __WeightChoice__( self, weighted_dict ):
         comm_names = list(weighted_dict.keys())
-        comm_ws = [1 / weighted_dict[n] for n in weighted_dict.keys()]
+        comm_ws = [1 / weighted_dict[n]['value'] for n in weighted_dict.keys()]
 
         cumdlist = list(itertools.accumulate(comm_ws))
         x = random.random() * cumdlist[-1]
@@ -70,8 +73,17 @@ class VeryFirstPolicy( PolicyBase ):
         return self.__communicators__[ comm_name ]
 
     def Update( self, communicator_name, transfer_record ):
+        print('Update')
+        print(communicator_name)
+        print(transfer_record)
         for filename in transfer_record.keys():
             record = transfer_record[filename]
             now_state = self.__DecodeState__(record[0])
-            self.__action_map__[ now_state ][ communicator_name ] += record[1]
-            self.__action_map__[ now_state ][ communicator_name ] /= 2
+            
+            avg_value = self.__action_map__[ now_state ][ communicator_name ]['value']
+            times = self.__action_map__[ now_state ][ communicator_name ]['times']
+            avg_value = avg_value * times + record[1]
+            times += 1
+            
+            self.__action_map__[ now_state ][ communicator_name ]['times'] = times
+            self.__action_map__[ now_state ][ communicator_name ]['value'] = avg_value / times

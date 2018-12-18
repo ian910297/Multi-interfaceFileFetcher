@@ -94,5 +94,5 @@ class SoftmaxPolicy( PolicyBase ):
             avg_value = avg_value * times + record[1]
             times += 1
             
-            self.__action_map__[ now_state ][ communicator_name ]['times'] += times
+            self.__action_map__[ now_state ][ communicator_name ]['times'] = times
             self.__action_map__[ now_state ][ communicator_name ]['value'] = avg_value / times
