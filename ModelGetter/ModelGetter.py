@@ -10,9 +10,10 @@ from .Interfaces.Bluetooth import Obexftp
 
 from .Policies.EzPolicy import DummyPolicy
 from .Policies.BasicRL import VeryFirstPolicy as VFRL
+from .Policies.SoftmaxRL import SoftmaxPolicy as Softmax
 
 interface_selector = { "Scp": Scp, "Ftp": Ftp, "Bluetooth": Obexftp }
-policy_selector = {"Dummy": DummyPolicy, "VFRL": VFRL}
+policy_selector = {"Dummy": DummyPolicy, "VFRL": VFRL, "Softmax": Softmax}
 
 class ModelGetter:
     def __init__( self, interface_descriptors, policy_descriptor ):

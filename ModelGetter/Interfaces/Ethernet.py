@@ -79,7 +79,7 @@ class Ftp( InterfaceBase ):
             self.__model_root__,
             self.__address__,
             self.__model_root__,
-            '16384'
+            '10'
         ]).decode('utf8')
 
         self.__profile__ = json.loads(profile_str)
