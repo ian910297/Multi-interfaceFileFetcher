@@ -73,8 +73,6 @@ class VeryFirstPolicy( PolicyBase ):
         return self.__communicators__[ comm_name ]
 
     def Update( self, communicator_name, transfer_record ):
-        print('Update')
-        print(communicator_name)
         print(transfer_record)
         for filename in transfer_record.keys():
             record = transfer_record[filename]
