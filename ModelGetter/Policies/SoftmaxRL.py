@@ -15,7 +15,7 @@ import bisect
 import math
 
 class SoftmaxPolicy( PolicyBase ):
-    def __init__( self, communicators ):
+    def __init__( self, communicators, timerate=0.8 ):
         self.__communicators__ = {
             comm.GetName(): comm for comm in communicators
         }
@@ -24,6 +24,7 @@ class SoftmaxPolicy( PolicyBase ):
             for comm in communicators
         }
         self.__BuildMaps__()
+        self.timerate = timerate
 
     def __BuildMaps__( self ):
         self.__action_map__ = { int(r): {} for r in list(self.__profiles__.items())[0][1].keys() }
@@ -37,8 +38,8 @@ class SoftmaxPolicy( PolicyBase ):
                 self.__action_map__[ filesize ][ comm_name ] = {}
                 self.__action_map__[ filesize ][ comm_name ]['value'] = \
                     sum(self.__profiles__[ comm_name ][ str(filesize) ]) / len(self.__profiles__[ comm_name ][ str(filesize) ])
-                self.__action_map__[ filesize ][ comm_name ]['times'] = \
-                    len(self.__profiles__[ comm_name ][ str(filesize) ])
+                self.__action_map__[ filesize ][ comm_name ]['timestamp'] = time.time()
+                self.__action_map__[ filesize ][ comm_name ]['times'] = 0
 
         pprint(self.__state_map__)
         pprint(self.__action_map__)
@@ -78,6 +79,7 @@ class SoftmaxPolicy( PolicyBase ):
         comm_name = self.__WeightChoice__(comm_ws)
 
         print("use: " + comm_name)
+        print(self.__action_map__)
 
         return self.__communicators__[ comm_name ]
 
@@ -87,10 +89,11 @@ class SoftmaxPolicy( PolicyBase ):
             record = transfer_record[filename]
             now_state = self.__DecodeState__(record[0])
             
-            avg_value = self.__action_map__[ now_state ][ communicator_name ]['value']
-            times = self.__action_map__[ now_state ][ communicator_name ]['times']
-            avg_value = avg_value * times + record[1]
-            times += 1
+            value = self.__action_map__[ now_state ][ communicator_name ]['value']
+            last_timestamp = self.__action_map__[ now_state ][ communicator_name ]['timestamp']
+            timestamp = time.time()
+            value = record[1] * self.timerate + value * (1 - self.timerate)
             
-            self.__action_map__[ now_state ][ communicator_name ]['times'] = times
-            self.__action_map__[ now_state ][ communicator_name ]['value'] = avg_value / times
+            self.__action_map__[ now_state ][ communicator_name ]['timestamp'] = timestamp
+            self.__action_map__[ now_state ][ communicator_name ]['times'] += 1
+            self.__action_map__[ now_state ][ communicator_name ]['value'] = value

@@ -42,7 +42,7 @@ class ModelGetter:
         # if no such model available return None
         if len(ava_comms) == 0:
             return float('nan')
-
+        print(ava_comms)
         # policy select communicator
         target_comm = self.__policy_agent__.Select(ava_comms, filesize)
 

@@ -18,6 +18,15 @@ class Scp( InterfaceBase ):
         self.__script_dir__ = script_dir
         self.__profile__    = None
 
+    def __NoProfile__( self ):
+        profile = {}
+        i = 1
+        while i <= 16384:
+            profile[str(i)] = [ 0.01 ]
+            i *= 4
+
+        self.__profile__ = profile
+
     def __RenewProfile__( self ):
         profile_str = subprocess.check_output([
             self.__script_dir__ + '/scp_test.sh',
@@ -58,9 +67,12 @@ class Scp( InterfaceBase ):
 
         return json.loads(report_str)
 
-    def GetProfile( self, renew=False ):
+    def GetProfile( self, renew=False , noprofile=True ):
         if renew or self.__profile__ == None:
-            self.__RenewProfile__()
+            if noprofile == True:
+                self.__NoProfile__()
+            else:
+                self.__RenewProfile__()
 
         return self.__profile__
 
@@ -71,6 +83,15 @@ class Ftp( InterfaceBase ):
         self.__model_root__ = model_root
         self.__script_dir__ = script_dir
         self.__profile__    = None
+
+    def __NoProfile__( self ):
+        profile = {}
+        i = 1
+        while i <= 16384:
+            profile[str(i)] = [ 0.01 ]
+            i *= 4
+
+        self.__profile__ = profile
 
     def __RenewProfile__( self ):
         profile_str = subprocess.check_output([
@@ -112,8 +133,11 @@ class Ftp( InterfaceBase ):
 
         return json.loads(report_str)
 
-    def GetProfile( self, renew=False ):
+    def GetProfile( self, renew=False , noprofile=True ):
         if renew or self.__profile__ == None:
-            self.__RenewProfile__()
+            if noprofile == True:
+                self.__NoProfile__()
+            else:
+                self.__RenewProfile__()
 
         return self.__profile__

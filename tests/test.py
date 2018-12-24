@@ -50,7 +50,7 @@ def main():
 
     cnt = 0
     while True:
-        target_model = random.choice([ "mdl1", "mdl2" ])
+        target_model = random.choice([ "mlp.unit5.epoch10.model", "mlp.unit5.epoch5.model" ])
 
         start = time.time()
         mg.GetModel(target_model)
