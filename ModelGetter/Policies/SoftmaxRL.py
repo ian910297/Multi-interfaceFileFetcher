@@ -80,7 +80,6 @@ class SoftmaxPolicy( PolicyBase ):
         comm_name = self.__WeightChoice__(comm_ws)
 
         print("use: " + comm_name)
-        print(self.__action_map__)
 
         return self.__communicators__[ comm_name ]
 
