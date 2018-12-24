@@ -13,6 +13,7 @@ import random
 import itertools
 import bisect
 import math
+import time
 
 class SoftmaxPolicy( PolicyBase ):
     def __init__( self, communicators, timerate=0.8 ):
